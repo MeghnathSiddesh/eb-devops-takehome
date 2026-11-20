@@ -1,0 +1,6 @@
+apiVersion: v2
+name: demo
+description: Small demo HTTP service (GET / and GET /healthz)
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

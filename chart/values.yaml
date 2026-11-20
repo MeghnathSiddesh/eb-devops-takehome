@@ -1,0 +1,44 @@
+# Number of pod replicas.
+replicaCount: 2
+
+image:
+  # Built locally by setup.sh and loaded into kind, so there is no registry.
+  repository: demo-app
+  tag: "1.0.0"
+  # IfNotPresent so Kubernetes uses the image loaded into the kind node
+  # instead of trying to pull it from a registry that does not have it.
+  pullPolicy: IfNotPresent
+
+# Exposed to the container as the APP_NAME and VERSION environment variables.
+config:
+  appName: demo-app
+  version: "1.0.0"
+
+service:
+  type: ClusterIP
+  port: 80          # port the Service listens on
+  targetPort: 8080  # port the container listens on
+
+ingress:
+  enabled: true
+  className: nginx
+  host: demo.local
+  path: /
+  pathType: Prefix
+  annotations: {}
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+probes:
+  liveness:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  readiness:
+    initialDelaySeconds: 2
+    periodSeconds: 5

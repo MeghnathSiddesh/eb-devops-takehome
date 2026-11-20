@@ -1,0 +1,5 @@
+Release {{ .Release.Name }} installed in namespace {{ .Release.Namespace }}.
+
+Try it (needs the ingress-nginx controller and the kind port mapping from setup.sh):
+
+  curl -H 'Host: {{ .Values.ingress.host }}' http://localhost/
