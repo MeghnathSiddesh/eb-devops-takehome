@@ -1,0 +1,3 @@
+# No third-party dependencies: the service uses only the Python standard library.
+# The Dockerfile still installs this file into a virtualenv in the build stage,
+# so adding a dependency later needs no Dockerfile change.

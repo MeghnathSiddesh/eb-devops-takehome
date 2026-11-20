@@ -1,0 +1,62 @@
+For example, a Kubernetes configuration could contain:
+
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+Kubernetes supports health checks called probes.
+
+Two important probes are:
+
+Liveness Probe
+
+Checks whether the application is still alive.
+
+If the liveness probe repeatedly fails, Kubernetes may restart the container.
+
+Readiness Probe
+
+Checks whether the application is ready to receive traffic.
+
+If the readiness probe fails, Kubernetes stops sending normal Service traffic to that Pod until it becomes ready again.
+
+Both can use the /healthz endpoint in this example.
+
+Application lifecycle
+1. Kubernetes starts the container
+   
+   Python executes app.py.
+2. Python reads the PORT variable
+   
+   If not configured, it uses 8080.
+3. The HTTP server is created
+   
+   ThreadingHTTPServer listens on 0.0.0.0:8080.
+4. Signal handlers are registered
+   
+   SIGTERM and SIGINT are connected to the stop() function.
+5. The server starts listening
+   
+   serve_forever() waits for HTTP requests.
+6. Kubernetes checks application health
+   
+   It sends requests to /healthz.
+7. Users access the application
+   
+   / returns application name, version, and Pod hostname.
+8. Kubernetes deletes or replaces the Pod
+   
+   SIGTERM triggers the graceful shutdown logic.
+9. The HTTP server closes
+   
+   The application prints shut down cleanly.
