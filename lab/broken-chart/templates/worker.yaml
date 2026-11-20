@@ -37,9 +37,16 @@ spec:
             timeoutSeconds: 3
           securityContext:
             runAsNonRoot: true
-            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            readOnlyRootFilesystem: false
             allowPrivilegeEscalation: false
             capabilities:
               drop: ["ALL"]
+          volumeMounts:
+            - name: app-cache
+              mountPath: /var/cache/app
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
+      volumes:
+        - name: app-cache
+          emptyDir: {}
