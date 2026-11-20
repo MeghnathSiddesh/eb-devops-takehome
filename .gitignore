@@ -1,0 +1,9 @@
+# secrets / local junk - never commit these
+.env
+*.pem
+*.key
+kubeconfig*
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
